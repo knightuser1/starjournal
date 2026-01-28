@@ -444,64 +444,84 @@
             background-clip: text;
             margin-bottom: 0.5rem;
         }
-// Handle auth form submission
-document.getElementById('authForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    const submitButton = document.getElementById('authSubmitButton');
 
-    // Disable button and show loading
-    submitButton.disabled = true;
-    const originalText = submitButton.textContent;
-    submitButton.innerHTML = originalText + '<span class="loading"></span>';
-
-    try {
-        if (isLoginMode) {
-            // Sign In
-            const { data, error } = await supabase.auth.signInWithPassword({
-                email,
-                password
-            });
-
-            if (error) throw error;
-
-            currentUser = data.user;
-            showMainApp();
-            loadJournals();
-        } else {
-            // Sign Up
-            const { data, error } = await supabase.auth.signUp({
-                email,
-                password,
-                options: {
-                    emailRedirectTo: window.location.origin
-                }
-            });
-
-            if (error) throw error;
-
-            if (data.user) {
-                // Check if email confirmation is required
-                if (data.user.identities && data.user.identities.length === 0) {
-                    showError('Please check your email to confirm your account!');
-                    submitButton.disabled = false;
-                    submitButton.textContent = originalText;
-                } else {
-                    currentUser = data.user;
-                    showMainApp();
-                    loadJournals();
-                }
-            }
+        .auth-title p {
+            color: #e9d5ff;
+            font-size: 0.875rem;
         }
-    } catch (error) {
-        console.error('Auth error:', error);
-        showError(error.message || 'An error occurred. Please try again.');
-        submitButton.disabled = false;
-        submitButton.textContent = originalText;
-    }
-});
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-label {
+            display: block;
+            color: #e9d5ff;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            color: #e9d5ff;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            outline: none;
+            font-family: inherit;
+            font-size: 1rem;
+            backdrop-filter: blur(4px);
+            transition: all 0.3s;
+        }
+
+        .form-input::placeholder {
+            color: rgba(233, 213, 255, 0.5);
+        }
+
+        .form-input:focus {
+            border-color: rgba(168, 85, 247, 0.6);
+            box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.2);
+        }
+
+        .auth-button {
+            width: 100%;
+            background: linear-gradient(to right, #facc15, #ec4899);
+            color: white;
+            font-weight: 600;
+            padding: 0.875rem 1.5rem;
+            border-radius: 0.5rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(250, 204, 21, 0.4);
+            font-size: 1rem;
+            margin-top: 1rem;
+        }
+
+        .auth-button:hover:not(:disabled) {
+            background: linear-gradient(to right, #eab308, #db2777);
+            transform: scale(1.02);
+        }
+
+        .auth-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .auth-toggle {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #e9d5ff;
+            font-size: 0.875rem;
+        }
+
+        .auth-toggle button {
+            background: none;
+            border: none;
+            color: #fef08a;
+            font-weight: 600;
             cursor: pointer;
             text-decoration: underline;
             padding: 0;
@@ -661,7 +681,7 @@ document.getElementById('authForm').addEventListener('submit', async (e) => {
         <div id="authPage" class="auth-container">
             <div class="auth-box">
                 <div class="auth-title">
-                    <h2>? Star Journal ?</h2>
+                    <h2>✨ Star Journal ✨</h2>
                     <p id="authSubtitle">Sign in to your celestial diary</p>
                 </div>
 
@@ -685,7 +705,7 @@ document.getElementById('authForm').addEventListener('submit', async (e) => {
                             type="password" 
                             id="password" 
                             class="form-input" 
-                            placeholder=""
+                            placeholder="••••••••"
                             required
                         >
                     </div>
@@ -710,9 +730,9 @@ document.getElementById('authForm').addEventListener('submit', async (e) => {
             <!-- Title -->
             <div class="title">
                 <h1>
-                    <span class="sparkle">?</span>
+                    <span class="sparkle">✨</span>
                     Star Journal
-                    <span class="sparkle">?</span>
+                    <span class="sparkle">✨</span>
                 </h1>
                 <p>Write your thoughts and watch them shine among the stars</p>
             </div>
@@ -738,10 +758,10 @@ document.getElementById('authForm').addEventListener('submit', async (e) => {
                     <textarea 
                         id="journalInput" 
                         class="input-textarea" 
-                        placeholder="Write your journal entry here... and watch it become a star ?"
+                        placeholder="Write your journal entry here... and watch it become a star ✨"
                     ></textarea>
                     <button id="submitButton" class="submit-button">
-                        Send to the Stars ?
+                        Send to the Stars ✨
                     </button>
                 </div>
             </div>
@@ -755,7 +775,7 @@ document.getElementById('authForm').addEventListener('submit', async (e) => {
         // =============================================
         // CONFIGURATION - REPLACE WITH YOUR SUPABASE DETAILS
         // =============================================
-        const SUPABASE_URL = 'gjripyivpuzzebvtgbie';
+        const SUPABASE_URL = 'https://gjripyivpuzzebvtgbie.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdqcmlweWl2cHV6emVidnRnYmllIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk1ODMzNzIsImV4cCI6MjA4NTE1OTM3Mn0.ZywblUKMa-CIuTM-4979vygn8EBXSu_6jr-mJWJbnuc';
 
         // Initialize Supabase client
@@ -818,38 +838,7 @@ document.getElementById('authForm').addEventListener('submit', async (e) => {
             }
             hideError();
         });
-document.getElementById("authForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
 
-  console.log("FORM SUBMITTED"); // debugging
-
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-
-  let result;
-
-  if (isLoginMode) {
-    result = await supabase.auth.signInWithPassword({
-      email,
-      password
-    });
-  } else {
-    result = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: window.location.origin
-      }
-    });
-  }
-
-  if (result.error) {
-    alert(result.error.message);
-    return;
-  }
-
-  alert(isLoginMode ? "Logged in!" : "Check your email to confirm signup");
-});
         // Handle auth form submission
         document.getElementById('authForm').addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -878,20 +867,13 @@ document.getElementById("authForm").addEventListener("submit", async (e) => {
                     loadJournals();
                 } else {
                     // Sign Up
-                   const { data, error } = await supabase.auth.signUp({
-  email,
-  password,
-  options: {
-    emailRedirectTo: window.location.origin
-  }
-});
-
-if (error) {
-  alert(error.message);
-  return;
-}
-
-alert("Check your email to confirm your account");
+                    const { data, error } = await supabase.auth.signUp({
+                        email,
+                        password,
+                        options: {
+                            emailRedirectTo: window.location.origin
+                        }
+                    });
 
                     if (error) throw error;
 
@@ -1230,7 +1212,7 @@ alert("Check your email to confirm your account");
                     input.value = '';
                     isAnimating = false;
                     submitButton.disabled = false;
-                    submitButton.textContent = 'Send to the Stars ?';
+                    submitButton.textContent = 'Send to the Stars ✨';
                 }, 2500);
 
             } catch (error) {
@@ -1238,7 +1220,7 @@ alert("Check your email to confirm your account");
                 alert('Failed to save journal. Please try again.');
                 isAnimating = false;
                 submitButton.disabled = false;
-                submitButton.textContent = 'Send to the Stars ?';
+                submitButton.textContent = 'Send to the Stars ✨';
             }
         }
 
@@ -1272,10 +1254,4 @@ alert("Check your email to confirm your account");
         checkAuth(); // Check if user is already logged in
     </script>
 </body>
-
 </html>
-
-
-
-
-
