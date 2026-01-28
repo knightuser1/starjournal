@@ -867,10 +867,20 @@
                     loadJournals();
                 } else {
                     // Sign Up
-                    const { data, error } = await supabase.auth.signUp({
-                        email,
-                        password
-                    });
+                   const { data, error } = await supabase.auth.signUp({
+  email,
+  password,
+  options: {
+    emailRedirectTo: window.location.origin
+  }
+});
+
+if (error) {
+  alert(error.message);
+  return;
+}
+
+alert("Check your email to confirm your account");
 
                     if (error) throw error;
 
@@ -1253,4 +1263,5 @@
 </body>
 
 </html>
+
 
