@@ -793,7 +793,7 @@
   <script>
     const emailInput = document.getElementById("email");
     const passwordInput = document.getElementById("password");
-
+    document.addEventListener("DOMContentLoaded",() =>{
     document.getElementById("signupBtn").addEventListener("click", async (e) => {
       e.preventDefault();
 
@@ -801,7 +801,7 @@
         email: emailInput.value,
         password: passwordInput.value,
       });
-
+       });
       if (error) alert(error.message);
       else alert("Signup successful! Check email 📧");
     });
@@ -1297,6 +1297,7 @@
     </script>
 </body>
 </html>
+
 
 
 
