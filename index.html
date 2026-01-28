@@ -768,18 +768,18 @@
         </div>
     </div>
 
-    <!-- supabaseClientClientClient JS Client -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabaseClientClientClient/supabaseClientClientClient-js@2"></script>
+    <!-- supabase JS Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <script>
         // =============================================
-        // CONFIGURATION - REPLACE WITH YOUR supabaseClientClient DETAILS
+        // CONFIGURATION - REPLACE WITH YOUR supabase DETAILS
         // =============================================
-        const supabaseClientClient_URL = 'https://gjripyivpuzzebvtgbie.supabaseClientClient.co';
-        const supabaseClientClient_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdqcmlweWl2cHV6emVidnRnYmllIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk1ODMzNzIsImV4cCI6MjA4NTE1OTM3Mn0.ZywblUKMa-CIuTM-4979vygn8EBXSu_6jr-mJWJbnuc';
+        const supabase_URL = 'https://gjripyivpuzzebvtgbie.supabaseClientClient.co';
+        const supabase_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdqcmlweWl2cHV6emVidnRnYmllIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk1ODMzNzIsImV4cCI6MjA4NTE1OTM3Mn0.ZywblUKMa-CIuTM-4979vygn8EBXSu_6jr-mJWJbnuc';
 
         // Initialize supabaseClientClient client
-        const supabaseClientClient = window.supabaseClientClient.createClient(supabaseClientClient_URL, supabaseClientClient_ANON_KEY);
+        const supabase = window.supabase.createClient(supabase_URL, supabase_ANON_KEY);
 
         // =============================================
         // STATE MANAGEMENT
@@ -1255,4 +1255,5 @@
     </script>
 </body>
 </html>
+
 
