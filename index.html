@@ -10,7 +10,11 @@
             padding: 0;
             box-sizing: border-box;
         }
-
+<script
+    src="https://unpkg.com/@supabase/supabase-js@2"></script>
+        <script> 
+        const supabase = supabase.createClient("https://gjripyivpuzzebvtgbie.supabase.co",eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdqcmlweWl2cHV6emVidnRnYmllIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk1ODMzNzIsImV4cCI6MjA4NTE1OTM3Mn0.ZywblUKMa-CIuTM-4979vygn8EBXSu_6jr-mJWJbnuc")
+        console.log(Supabase connected",supabase)</script>
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             overflow: hidden;
@@ -705,7 +709,7 @@
                             type="password" 
                             id="password" 
                             class="form-input" 
-                            placeholder="••••••••"
+                            placeholder="Â•Â•Â•Â•Â•Â•Â•Â•"
                             required
                         >
                     </div>
@@ -1251,4 +1255,5 @@
         checkAuth(); // Check if user is already logged in
     </script>
 </body>
+
 </html>
