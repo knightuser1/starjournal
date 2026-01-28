@@ -768,18 +768,18 @@
         </div>
     </div>
 
-    <!-- Supabase JS Client -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- supabaseClientClientClient JS Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabaseClientClientClient/supabaseClientClientClient-js@2"></script>
 
     <script>
         // =============================================
-        // CONFIGURATION - REPLACE WITH YOUR SUPABASE DETAILS
+        // CONFIGURATION - REPLACE WITH YOUR supabaseClientClient DETAILS
         // =============================================
-        const SUPABASE_URL = 'https://gjripyivpuzzebvtgbie.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdqcmlweWl2cHV6emVidnRnYmllIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk1ODMzNzIsImV4cCI6MjA4NTE1OTM3Mn0.ZywblUKMa-CIuTM-4979vygn8EBXSu_6jr-mJWJbnuc';
+        const supabaseClientClient_URL = 'https://gjripyivpuzzebvtgbie.supabaseClientClient.co';
+        const supabaseClientClient_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdqcmlweWl2cHV6emVidnRnYmllIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk1ODMzNzIsImV4cCI6MjA4NTE1OTM3Mn0.ZywblUKMa-CIuTM-4979vygn8EBXSu_6jr-mJWJbnuc';
 
-        // Initialize Supabase client
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        // Initialize supabaseClientClient client
+        const supabaseClientClient = window.supabaseClientClient.createClient(supabaseClientClient_URL, supabaseClientClient_ANON_KEY);
 
         // =============================================
         // STATE MANAGEMENT
@@ -809,7 +809,7 @@
         
         // Check if user is already logged in
         async function checkAuth() {
-            const { data: { session } } = await supabase.auth.getSession();
+            const { data: { session } } = await supabaseClientClient.auth.getSession();
             if (session) {
                 currentUser = session.user;
                 showMainApp();
@@ -855,7 +855,7 @@
             try {
                 if (isLoginMode) {
                     // Sign In
-                    const { data, error } = await supabase.auth.signInWithPassword({
+                    const { data, error } = await supabaseClientClient.auth.signInWithPassword({
                         email,
                         password
                     });
@@ -867,7 +867,7 @@
                     loadJournals();
                 } else {
                     // Sign Up
-                    const { data, error } = await supabase.auth.signUp({
+                    const { data, error } = await supabaseClientClient.auth.signUp({
                         email,
                         password,
                         options: {
@@ -900,7 +900,7 @@
 
         // Logout
         document.getElementById('logoutButton').addEventListener('click', async () => {
-            await supabase.auth.signOut();
+            await supabaseClientClient.auth.signOut();
             currentUser = null;
             journals = [];
             hideMainApp();
@@ -936,7 +936,7 @@
         // Load journals from database
         async function loadJournals() {
             try {
-                const { data, error } = await supabase
+                const { data, error } = await supabaseClientClient
                     .from('journals')
                     .select('*')
                     .eq('user_id', currentUser.id)
@@ -969,7 +969,7 @@
         // Save journal to database
         async function saveJournal(text) {
             try {
-                const { data, error } = await supabase
+                const { data, error } = await supabaseClientClient
                     .from('journals')
                     .insert([
                         {
@@ -992,7 +992,7 @@
         // Delete journal from database
         async function deleteJournal(journalId) {
             try {
-                const { error } = await supabase
+                const { error } = await supabaseClientClient
                     .from('journals')
                     .delete()
                     .eq('id', journalId)
@@ -1255,3 +1255,4 @@
     </script>
 </body>
 </html>
+
