@@ -710,7 +710,7 @@
                         >
                     </div>
 
-                    <button type="submit" id="authSubmitButton" class="auth-button">
+                    <button type="submit" id="authsignupBtn" class="auth-button">
                         Sign In
                     </button>
                 </form>
@@ -760,7 +760,7 @@
                         class="input-textarea" 
                         placeholder="Write your journal entry here... and watch it become a star ✨"
                     ></textarea>
-                    <button id="submitButton" class="submit-button">
+                    <button id="signupBtn" class="submit-button">
                         Send to the Stars ✨
                     </button>
                 </div>
@@ -783,6 +783,28 @@
         console.log("Supabase connected",supabaseClient);
     </script>
         <body>
+
+  <!-- your login / signup HTML -->
+  <!-- your buttons and inputs -->
+
+  <!-- Supabase CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- Supabase connection -->
+  <script>
+    const supabaseUrl = "https://YOUR_PROJECT_ID.supabase.co";
+    const supabaseKey = "YOUR_PUBLIC_ANON_KEY";
+
+    const supabaseClient = supabase.createClient(
+      supabaseUrl,
+      supabaseKey
+    );
+
+    console.log("Supabase connected", supabaseClient);
+  </script>
+
+  <!-- ✅ PASTE THE SIGNUP / SIGNIN CODE HERE -->
+  <body>
 
   <!-- your login / signup HTML -->
   <!-- your buttons and inputs -->
@@ -835,6 +857,8 @@
 
 </body>
 
+</body>
+
         // =============================================
         // STATE MANAGEMENT
         // =============================================
@@ -874,18 +898,18 @@
         // Toggle between login and signup
         document.getElementById('toggleAuthMode').addEventListener('click', () => {
             isLoginMode = !isLoginMode;
-            const submitButton = document.getElementById('authSubmitButton');
+            const signupBtn = document.getElementById('authsignupBtn');
             const toggleText = document.getElementById('toggleText');
             const toggleButton = document.getElementById('toggleAuthMode');
             const subtitle = document.getElementById('authSubtitle');
 
             if (isLoginMode) {
-                submitButton.textContent = 'Sign In';
+                signupBtn.textContent = 'Sign In';
                 toggleText.textContent = "Don't have an account?";
                 toggleButton.textContent = 'Sign Up';
                 subtitle.textContent = 'Sign in to your celestial diary';
             } else {
-                submitButton.textContent = 'Sign Up';
+                signupBtn.textContent = 'Sign Up';
                 toggleText.textContent = 'Already have an account?';
                 toggleButton.textContent = 'Sign In';
                 subtitle.textContent = 'Create your celestial diary';
@@ -899,12 +923,12 @@
             
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-            const submitButton = document.getElementById('authSubmitButton');
+            const signupBtn = document.getElementById('authsignupBtn');
 
             // Disable button and show loading
-            submitButton.disabled = true;
-            const originalText = submitButton.textContent;
-            submitButton.innerHTML = originalText + '<span class="loading"></span>';
+            signupBtn.disabled = true;
+            const originalText = signupBtn.textContent;
+            signupBtn.innerHTML = originalText + '<span class="loading"></span>';
 
             try {
                 if (isLoginMode) {
@@ -935,8 +959,8 @@
                         // Check if email confirmation is required
                         if (data.user.identities && data.user.identities.length === 0) {
                             showError('Please check your email to confirm your account!');
-                            submitButton.disabled = false;
-                            submitButton.textContent = originalText;
+                            signupBtn.disabled = false;
+                            signupBtn.textContent = originalText;
                         } else {
                             currentUser = data.user;
                             showMainApp();
@@ -947,8 +971,8 @@
             } catch (error) {
                 console.error('Auth error:', error);
                 showError(error.message || 'An error occurred. Please try again.');
-                submitButton.disabled = false;
-                submitButton.textContent = originalText;
+                signupBtn.disabled = false;
+                signupBtn.textContent = originalText;
             }
         });
 
@@ -1191,10 +1215,10 @@
             
             if (!text || isAnimating) return;
 
-            const submitButton = document.getElementById('submitButton');
+            const signupBtn = document.getElementById('signupBtn');
             isAnimating = true;
-            submitButton.disabled = true;
-            submitButton.textContent = 'Creating Your Star...';
+            signupBtn.disabled = true;
+            signupBtn.textContent = 'Creating Your Star...';
 
             try {
                 // Save to database first
@@ -1265,16 +1289,16 @@
                     animContainer.innerHTML = '';
                     input.value = '';
                     isAnimating = false;
-                    submitButton.disabled = false;
-                    submitButton.textContent = 'Send to the Stars ✨';
+                    signupBtn.disabled = false;
+                    signupBtn.textContent = 'Send to the Stars ✨';
                 }, 2500);
 
             } catch (error) {
                 console.error('Error submitting journal:', error);
                 alert('Failed to save journal. Please try again.');
                 isAnimating = false;
-                submitButton.disabled = false;
-                submitButton.textContent = 'Send to the Stars ✨';
+                signupBtn.disabled = false;
+                signupBtn.textContent = 'Send to the Stars ✨';
             }
         }
 
@@ -1282,7 +1306,7 @@
         // EVENT LISTENERS
         // =============================================
 
-        document.getElementById('submitButton').addEventListener('click', submitJournal);
+        document.getElementById('signupBtn').addEventListener('click', submitJournal);
         document.getElementById('journalInput').addEventListener('keydown', (e) => {
             if (e.key === 'Enter' && e.ctrlKey) {
                 submitJournal();
@@ -1309,6 +1333,7 @@
     </script>
 </body>
 </html>
+
 
 
 
