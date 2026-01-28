@@ -816,11 +816,11 @@
 
       if (error) alert(error.message);
       else alert("Signed in successfully ✨");
-    });
-
+    });});
+  </script>
   
 
-                              </body>
+                              
 
 </body>
 
@@ -901,8 +901,7 @@
                     const { data, error } = await supabaseClientClient.auth.signInWithPassword({
                         email,
                         password
-                    });
-
+ 
                     if (error) throw error;
 
                     currentUser = data.user;
@@ -1298,6 +1297,7 @@
     </script>
 </body>
 </html>
+
 
 
 
