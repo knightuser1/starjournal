@@ -838,7 +838,38 @@
             }
             hideError();
         });
+document.getElementById("authForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
 
+  console.log("FORM SUBMITTED"); // debugging
+
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  let result;
+
+  if (isLoginMode) {
+    result = await supabase.auth.signInWithPassword({
+      email,
+      password
+    });
+  } else {
+    result = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        emailRedirectTo: window.location.origin
+      }
+    });
+  }
+
+  if (result.error) {
+    alert(result.error.message);
+    return;
+  }
+
+  alert(isLoginMode ? "Logged in!" : "Check your email to confirm signup");
+});
         // Handle auth form submission
         document.getElementById('authForm').addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -1263,5 +1294,6 @@ alert("Check your email to confirm your account");
 </body>
 
 </html>
+
 
 
