@@ -782,7 +782,58 @@
         const supabaseClient = window.supabase.createClient(supabase_URL, supabase_ANON_KEY);
         console.log("Supabase connected",supabaseClient);
     </script>
-        
+        <body>
+
+  <!-- your login / signup HTML -->
+  <!-- your buttons and inputs -->
+
+  <!-- Supabase CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- Supabase connection -->
+  <script>
+    const supabaseUrl = "https://YOUR_PROJECT_ID.supabase.co";
+    const supabaseKey = "YOUR_PUBLIC_ANON_KEY";
+
+    const supabaseClient = supabase.createClient(
+      supabaseUrl,
+      supabaseKey
+    );
+
+    console.log("Supabase connected", supabaseClient);
+  </script>
+
+  <!-- ✅ PASTE THE SIGNUP / SIGNIN CODE HERE -->
+  <script>
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+
+    document.getElementById("signupBtn").addEventListener("click", async (e) => {
+      e.preventDefault();
+
+      const { error } = await supabaseClient.auth.signUp({
+        email: emailInput.value,
+        password: passwordInput.value,
+      });
+
+      if (error) alert(error.message);
+      else alert("Signup successful! Check email 📧");
+    });
+
+    document.getElementById("signinBtn").addEventListener("click", async (e) => {
+      e.preventDefault();
+
+      const { error } = await supabaseClient.auth.signInWithPassword({
+        email: emailInput.value,
+        password: passwordInput.value,
+      });
+
+      if (error) alert(error.message);
+      else alert("Signed in successfully ✨");
+    });
+  </script>
+
+</body>
 
         // =============================================
         // STATE MANAGEMENT
@@ -1258,6 +1309,7 @@
     </script>
 </body>
 </html>
+
 
 
 
