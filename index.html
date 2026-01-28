@@ -779,8 +779,8 @@
         const supabase_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdqcmlweWl2cHV6emVidnRnYmllIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk1ODMzNzIsImV4cCI6MjA4NTE1OTM3Mn0.ZywblUKMa-CIuTM-4979vygn8EBXSu_6jr-mJWJbnuc';
 
         // Initialize supabase client
-        const supabase = window.supabase.createClient(supabase_URL, supabase_ANON_KEY);
-        console.log("Supabase connected",supabase);
+        const supabaseClient = window.supabase.createClient(supabase_URL, supabase_ANON_KEY);
+        console.log("Supabase connected",supabaseClient);
     </script>
         
 
@@ -1258,6 +1258,7 @@
     </script>
 </body>
 </html>
+
 
 
 
