@@ -444,84 +444,64 @@
             background-clip: text;
             margin-bottom: 0.5rem;
         }
+// Handle auth form submission
+document.getElementById('authForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const submitButton = document.getElementById('authSubmitButton');
 
-        .auth-title p {
-            color: #e9d5ff;
-            font-size: 0.875rem;
+    // Disable button and show loading
+    submitButton.disabled = true;
+    const originalText = submitButton.textContent;
+    submitButton.innerHTML = originalText + '<span class="loading"></span>';
+
+    try {
+        if (isLoginMode) {
+            // Sign In
+            const { data, error } = await supabase.auth.signInWithPassword({
+                email,
+                password
+            });
+
+            if (error) throw error;
+
+            currentUser = data.user;
+            showMainApp();
+            loadJournals();
+        } else {
+            // Sign Up
+            const { data, error } = await supabase.auth.signUp({
+                email,
+                password,
+                options: {
+                    emailRedirectTo: window.location.origin
+                }
+            });
+
+            if (error) throw error;
+
+            if (data.user) {
+                // Check if email confirmation is required
+                if (data.user.identities && data.user.identities.length === 0) {
+                    showError('Please check your email to confirm your account!');
+                    submitButton.disabled = false;
+                    submitButton.textContent = originalText;
+                } else {
+                    currentUser = data.user;
+                    showMainApp();
+                    loadJournals();
+                }
+            }
         }
-
-        .form-group {
-            margin-bottom: 1.25rem;
-        }
-
-        .form-label {
-            display: block;
-            color: #e9d5ff;
-            font-size: 0.875rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .form-input {
-            width: 100%;
-            background: rgba(255, 255, 255, 0.1);
-            color: #e9d5ff;
-            padding: 0.75rem 1rem;
-            border-radius: 0.5rem;
-            border: 1px solid rgba(168, 85, 247, 0.3);
-            outline: none;
-            font-family: inherit;
-            font-size: 1rem;
-            backdrop-filter: blur(4px);
-            transition: all 0.3s;
-        }
-
-        .form-input::placeholder {
-            color: rgba(233, 213, 255, 0.5);
-        }
-
-        .form-input:focus {
-            border-color: rgba(168, 85, 247, 0.6);
-            box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.2);
-        }
-
-        .auth-button {
-            width: 100%;
-            background: linear-gradient(to right, #facc15, #ec4899);
-            color: white;
-            font-weight: 600;
-            padding: 0.875rem 1.5rem;
-            border-radius: 0.5rem;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 4px 12px rgba(250, 204, 21, 0.4);
-            font-size: 1rem;
-            margin-top: 1rem;
-        }
-
-        .auth-button:hover:not(:disabled) {
-            background: linear-gradient(to right, #eab308, #db2777);
-            transform: scale(1.02);
-        }
-
-        .auth-button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .auth-toggle {
-            text-align: center;
-            margin-top: 1.5rem;
-            color: #e9d5ff;
-            font-size: 0.875rem;
-        }
-
-        .auth-toggle button {
-            background: none;
-            border: none;
-            color: #fef08a;
-            font-weight: 600;
+    } catch (error) {
+        console.error('Auth error:', error);
+        showError(error.message || 'An error occurred. Please try again.');
+        submitButton.disabled = false;
+        submitButton.textContent = originalText;
+    }
+});
             cursor: pointer;
             text-decoration: underline;
             padding: 0;
@@ -1294,6 +1274,7 @@ alert("Check your email to confirm your account");
 </body>
 
 </html>
+
 
 
 
