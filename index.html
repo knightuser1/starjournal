@@ -543,6 +543,17 @@
             text-align: center;
         }
 
+        .success-message {
+            background: rgba(34, 197, 94, 0.2);
+            border: 1px solid rgba(34, 197, 94, 0.5);
+            color: #bbf7d0;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
         .loading {
             display: inline-block;
             width: 16px;
@@ -686,6 +697,7 @@
                 </div>
 
                 <div id="errorMessage" class="error-message hidden"></div>
+                <div id="successMessage" class="success-message hidden"></div>
 
                 <form id="authForm">
                     <div class="form-group">
@@ -840,6 +852,7 @@
                         subtitle.textContent = 'Create your celestial diary';
                     }
                     hideError();
+                    hideSuccess();
                 });
             }
         }
@@ -877,22 +890,33 @@
                             // Sign Up
                             const { data, error } = await supabaseClient.auth.signUp({
                                 email,
-                                password,
-                                options: {
-                                    emailRedirectTo: window.location.origin
-                                }
+                                password
                             });
 
                             if (error) throw error;
 
                             if (data.user) {
-                                // Check if email confirmation is required
-                                if (data.user.identities && data.user.identities.length === 0) {
-                                    showError('Please check your email to confirm your account!');
+                                // Try to sign in immediately (works if email confirmation is disabled)
+                                const { data: signInData, error: signInError } = await supabaseClient.auth.signInWithPassword({
+                                    email,
+                                    password
+                                });
+
+                                if (signInError) {
+                                    // Email confirmation required
+                                    showSuccess('Account created successfully! Please check your email to confirm your account, then sign in.');
+                                    // Switch to login mode
+                                    isLoginMode = true;
+                                    submitBtn.textContent = 'Sign In';
+                                    document.getElementById('toggleText').textContent = "Don't have an account?";
+                                    document.getElementById('toggleAuthMode').textContent = 'Sign Up';
+                                    document.getElementById('authSubtitle').textContent = 'Sign in to your celestial diary';
+                                    document.getElementById('email').value = '';
+                                    document.getElementById('password').value = '';
                                     submitBtn.disabled = false;
-                                    submitBtn.textContent = originalText;
                                 } else {
-                                    currentUser = data.user;
+                                    // No email confirmation required - sign in successful
+                                    currentUser = signInData.user;
                                     showMainApp();
                                     loadJournals();
                                 }
@@ -938,10 +962,22 @@
             const errorDiv = document.getElementById('errorMessage');
             errorDiv.textContent = message;
             errorDiv.classList.remove('hidden');
+            hideSuccess();
         }
 
         function hideError() {
             document.getElementById('errorMessage').classList.add('hidden');
+        }
+
+        function showSuccess(message) {
+            const successDiv = document.getElementById('successMessage');
+            successDiv.textContent = message;
+            successDiv.classList.remove('hidden');
+            hideError();
+        }
+
+        function hideSuccess() {
+            document.getElementById('successMessage').classList.add('hidden');
         }
 
         // =============================================
