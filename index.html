@@ -791,23 +791,25 @@
 
   <!-- ✅ PASTE THE SIGNUP / SIGNIN CODE HERE -->
   <script>
-    const emailInput = document.getElementById("email");
-    const passwordInput = document.getElementById("password");
-    document.addEventListener("DOMContentLoaded",() =>{
-    document.getElementById("authSubmitButton").addEventListener("click", async (e) => {
-      e.preventDefault();
+    document.addEventListener("DOMContentLoaded", () => {
 
-      const { error } = await supabaseClient.auth.signUp({
-        email: emailInput.value,
-        password: passwordInput.value,
-      });
-       
-      if (error) alert(error.message);
-      else alert("Signup successful! Check email 📧");
+  const emailInput = document.getElementById("email");
+  const passwordInput = document.getElementById("password");
+
+  document.getElementById("authSubmitButton").addEventListener("click", async (e) => {
+    e.preventDefault();
+
+    const { error } = await supabaseClient.auth.signUp({
+      email: emailInput.value,
+      password: passwordInput.value,
     });
-  
-    
-    });
+
+    if (error) alert(error.message);
+    else alert("Signup successful! Check email 📩");
+  });
+
+});
+
   </script>
   
 
@@ -1288,6 +1290,7 @@
     </script>
 </body>
 </html>
+
 
 
 
